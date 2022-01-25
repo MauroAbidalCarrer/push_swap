@@ -6,9 +6,14 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 19:19:58 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/24 19:49:09 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:52:19 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "header.h"
+
+
+#include<stdio.h>
 
 int	is_num(char *str)
 {
@@ -26,6 +31,7 @@ int	mini_atoi(char *str)
 	long	nb;
 	long	sign;
 
+//printf("mini atoi called, str = \"%s\"\n", str);
 	nb = 0;
 	sign = 1;
 	if (*str == '-')
@@ -33,6 +39,7 @@ int	mini_atoi(char *str)
 	str += (*str == '-');
 	while (*str)
 		nb = nb * 10 + *(str++) - '0';
+//printf("nb = %ld\n\n", nb * sign);
 	return (nb * sign);
 }
 
@@ -50,9 +57,9 @@ int	av_is_valid(char **av)
 			return (0);
 		nb = mini_atoi(av[i]);
 		j = i;
-		while (av[i][++j])
+		while (av[++j])
 		{
-			if (mini_atoi(av[i][j]) == nb)
+			if (mini_atoi(av[j]) == nb)
 				return (0);
 		}	
 		i++;
@@ -74,8 +81,12 @@ t_stack	*mk_stack(int ac, char **av)
 		return (NULL);
 	}
 	s->s = ac;
-	while (ac-- > 0)
+	while (av && ac-- > 0)
+	{
+//printf("s->[%d] = %d\n", ac, mini_atoi(av[ac]));
 		s->v[ac] = mini_atoi(av[ac]);
+	}
+//printf("s->s = %d\n", s->s);
 	return (s);
 }
 
@@ -84,23 +95,27 @@ int main(int ac, char **av)
 	t_stack	*a;
 	t_stack	*b;
 
-	if (ac == 1 || !av_is_valid(av))
+	if (ac == 1 || !av_is_valid(av + 1))
 		return (0);
-	a = mk_stack(ac -1, av + 1);
+	a = mk_stack(ac - 1, av + 1);
 	if (a == NULL)
 		return(0);
-	b = mk_stack(0, NULL);
+	b = mk_stack(ac - 1, NULL);
 	if (b == NULL)
 	{
 		free(a);
 		return (1);
 	}
-	if (!is_sorted(a))
+//for (int i = 0; i < a->s; i++)
+//{printf("a->v[%d] = %d\n", i, a->v[i]);}
+	classify(a, b);
+//printf("done\n");
+	if (!is_sorted(*a))
 	{
-		if (ac < LIMIT )
-			swap_sort(a, b);
-		else
-			radix_sort(a, b);
+		//if (ac < LIMIT)
+			sam_eye_sort(a, b);
+		//else
+			//radix_sort(a, b);
 	}
 	free(a);
 	free(b);
