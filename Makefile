@@ -6,7 +6,7 @@
 #    By: maabidal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/29 20:08:50 by maabidal          #+#    #+#              #
-#    Updated: 2022/01/25 17:14:08 by maabidal         ###   ########.fr        #
+#    Updated: 2022/01/25 17:25:25 by maabidal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ BNSOBJS	= $(BONUSSRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	gcc -o $(OBJS)
+	gcc -o $(NAME) $(OBJS)
 
 .o : .c
 	$(CC) $(CFLAGS) -c $< -o $@ -I ./

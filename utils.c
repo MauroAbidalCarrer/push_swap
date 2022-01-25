@@ -6,13 +6,20 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:09:19 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/25 17:03:23 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:21:07 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "header.h"
 
 #include <stdio.h>
+
+
+void	print_stack(t_stack s, char name)
+{
+	printf("stack '%c', size = %d\n", name, s.s);
+	for (int i = 0; i < s.s; i++)
+		printf("%c.v[%d] = %d\n", name, i, s.v[i]);
+}
 
 void	classify(t_stack *a, t_stack *b)
 {
@@ -41,9 +48,12 @@ void	classify(t_stack *a, t_stack *b)
 
 int	is_sorted(t_stack s)
 {
-	while (s.s-- >= 2)
+	int	i;
+
+	i = -1;
+	while (++i < s.s - 1)
 	{
-		if (s.v[s.s] > s.v[s.s - 1])
+		if (s.v[i] > s.v[i + 1])
 			return (0);
 	}
 	return (1);
@@ -58,7 +68,6 @@ void	sam_eye_sort(t_stack *a, t_stack *b)
 	to_send = 0;
 	while (!is_sorted(*a))
 	{
-//printf("av->[0] = %d, av->[1] = %d, max = %d\n", a->v[0], a->v[1], max);
 		if (a->v[0] > a->v[1] && a->v[0] != max && a->v[1] != max)
 			swap(a, "sa\n");
 		else if (a->v[0] == to_send)
@@ -69,5 +78,11 @@ void	sam_eye_sort(t_stack *a, t_stack *b)
 		else
 			rotate(a, "ra\n");
 	}
+//printf("is_sorted(a) = %d, before push all\n", is_sorted(*a));
+//print_stack(*a, 'a');
+//printf("is_sorted(b) = %d, before push all\n", is_sorted(*b));
 	push_all(b, a, "pa\n");
+//printf("done sotring\n");
+//printf("is_sorted(a) = %d\n", is_sorted(*a));
+//print_stack(*a, 'a');
 }

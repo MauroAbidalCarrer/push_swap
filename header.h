@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 17:35:27 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/25 16:30:00 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:38:00 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,6 @@ void	sam_eye_sort(t_stack *a, t_stack *b);
 void	classify(t_stack *a, t_stack *b);
 void	sam_eye_sort(t_stack *a, t_stack *b);
 int	is_sorted(t_stack s);
+
+void	print_stack(t_stack s, char name);
 #endif

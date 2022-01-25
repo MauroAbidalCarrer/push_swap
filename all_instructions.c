@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:58:35 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/25 17:08:20 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:18:16 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,8 @@ void	rev_all(t_stack *a, t_stack *b)
 	write(1, "rrr\n", 3);
 }
 
-void	push_all(t_stack *src, t_stack *dst, char* name)
+void	push_all(t_stack *src, t_stack *dst, char *name)
 {
-//write(1, "push all-----------\n", 20);
 	while (src->s > 0)
-	{
-//printf("src->s = %d\n", src->s);
 		push(src, dst, name);
-	}
 }
