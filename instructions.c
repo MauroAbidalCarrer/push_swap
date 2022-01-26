@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:00:17 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/25 19:11:55 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/26 22:13:29 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	shift(t_stack s, int offset)
 //print_stack(s, 0);
 }
 
-void	push(t_stack *src, t_stack *dst, char *operation)
+void	push(t_stack *src, t_stack *dst)
 {
 //printf("push(%c%c) called\nsrc = \n", *operation, operation[1]);
 //print_stack(*src, 0);
@@ -55,12 +55,14 @@ void	push(t_stack *src, t_stack *dst, char *operation)
 //printf("dst = \n");
 //print_stack(*dst, operation[1]);
 
-	write(1, operation, 3);
+	write(1, "p", 1);
+	write(1, &(dst->name), 1);
+	write(1, "\n", 1);
 
 //printf("\n");
 }
 
-void	swap(t_stack *s, char *operation)
+void	swap(t_stack *s, int print_op)
 {
 	int	tmp;
 
@@ -69,20 +71,29 @@ void	swap(t_stack *s, char *operation)
 	tmp = s->v[0];
 	s->v[0] = s->v[1];
 	s->v[1] = tmp;
-	if (operation)
-		write(1, operation, 3);
+	if (!print_op)
+		return ;
+	write(1, "s", 1);
+	write(1, &(s->name), 1);
+	write(1, "\n", 1);
 }
 
-void	rotate(t_stack *s, char *operation)
+void	rotate(t_stack *s, int	print_op)
 {
 	shift(*s, 1);
-	if (operation)
-		write(1, operation, 3);
+	if (!print_op)
+		return ;
+	write(1, "r", 1);
+	write(1, &(s->name), 1);
+	write(1, "\n", 1);
 }
 
-void	rev_rotate(t_stack *s, char *operation)
+void	rev_rotate(t_stack *s, int	print_op)
 {
 	shift(*s, -1);
-	if (operation)
-		write(1, operation, 3);
+	if (!print_op)
+		return ;
+	write(1, "rr", 2);
+	write(1, &(s->name), 1);
+	write(1, "\n", 1);
 }

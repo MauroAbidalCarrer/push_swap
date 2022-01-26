@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 19:19:58 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/25 16:52:19 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/26 23:16:08 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,14 @@ int	av_is_valid(char **av)
 	return (1);
 }
 
-t_stack	*mk_stack(int ac, char **av)
+t_stack	*mk_stack(int ac, char **av, char name)
 {
 	t_stack	*s;
 
 	s = malloc(sizeof(t_stack));	
 	if (s == NULL)
 		return (NULL);
+	s->name = name;
 	s->v = malloc(ac * sizeof(int));
 	if (s->v == NULL)
 	{
@@ -97,10 +98,13 @@ int main(int ac, char **av)
 
 	if (ac == 1 || !av_is_valid(av + 1))
 		return (0);
-	a = mk_stack(ac - 1, av + 1);
+	a = mk_stack(ac - 1, av + 1, 'a');
+//printf("issorted = %d\n", is_sorted(*a));
+//print_stack(*a);
+//return (0);
 	if (a == NULL)
 		return(0);
-	b = mk_stack(ac - 1, NULL);
+	b = mk_stack(ac - 1, NULL, 'b');
 	if (b == NULL)
 	{
 		free(a);
@@ -112,10 +116,10 @@ int main(int ac, char **av)
 //printf("done\n");
 	if (!is_sorted(*a))
 	{
-		//if (ac < LIMIT)
+		if (ac < LIMIT)
 			sam_eye_sort(a, b);
-		//else
-			//radix_sort(a, b);
+		else
+			radix_sort(a, b);
 	}
 	free(a);
 	free(b);

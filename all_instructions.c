@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:58:35 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/25 17:18:16 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:22:30 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,27 @@
 
 void	swap_all(t_stack *a, t_stack *b)
 {
-	swap(a, NULL);
-	swap(b, NULL);
+	swap(a, 0);
+	swap(b, 0);
 	write(1, "ss\n", 3);
 }
 
 void	rotate_all(t_stack *a, t_stack *b)
 {
-	rotate(a, NULL);
-	rotate(b, NULL);
+	rotate(a, 0);
+	rotate(b, 0);
 	write(1, "rr\n", 3);
 }
 
 void	rev_all(t_stack *a, t_stack *b)
 {
-	rev_rotate(a, NULL);
-	rev_rotate(b, NULL);
+	rev_rotate(a, 0);
+	rev_rotate(b, 0);
 	write(1, "rrr\n", 3);
 }
 
-void	push_all(t_stack *src, t_stack *dst, char *name)
+void	push_all(t_stack *src, t_stack *dst)
 {
 	while (src->s > 0)
-		push(src, dst, name);
+		push(src, dst);
 }
