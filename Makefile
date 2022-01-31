@@ -6,14 +6,20 @@
 #    By: maabidal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/29 20:08:50 by maabidal          #+#    #+#              #
-#    Updated: 2022/01/30 20:26:27 by maabidal         ###   ########.fr        #
+#    Updated: 2022/01/31 17:18:30 by maabidal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+BONUS_SRCS 	=	all_instructions.c\
+			instructions.c\
+			checker.c\
+			setup.c
 
 SRCS 	=	all_instructions.c\
 			instructions.c\
 			main.c\
 			utils.c\
+			setup.c\
 			join.c
 
 NAME	= push_swap

@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:58:35 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 00:47:16 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:03:37 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 #include <stdio.h>
 
-void	swap_all(t_stack *a, t_stack *b)
+void	swap_all(t_stack *a, t_stack *b, int show)
 {
 	swap(a, 0);
 	swap(b, 0);
 	write(1, "ss\n", 3);
 }
 
-void	rotate_all(t_stack *a, t_stack *b)
+void	rotate_all(t_stack *a, t_stack *b, int show)
 {
 	rotate(a, 0);
 	rotate(b, 0);
 	write(1, "rr\n", 3);
 }
 
-void	rev_all(t_stack *a, t_stack *b)
+void	rev_all(t_stack *a, t_stack *b, int show)
 {
 	rev_rotate(a, 0);
 	rev_rotate(b, 0);
