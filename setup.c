@@ -6,9 +6,11 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:18:50 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 17:18:52 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:52:04 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "header.h"
 
 int	is_num(char *str)
 {
@@ -65,9 +67,29 @@ void	init_stack(t_stack *s, int ac, char **av, char name)
 	s->v = malloc(ac * sizeof(int));
 	if (s->v)
 	{
-		s->s = ac;
+		s->s = ac * (av != NULL);
 		while (av && ac-- > 0)
 			s->v[ac] = mini_atoi(av[ac]);
 	}
 }
 
+int	init(int ac, char **av, t_stack *a, t_stack *b)
+{
+	if (ac == 1)
+		return (1);
+	if (!av_is_valid(av + 1))
+	{
+		write(1, "ERROR\n", 6);
+		return (1);
+	}
+	init_stack(a, ac - 1, av + 1, 'a');
+	if (a->v == NULL)
+		return(0);
+	init_stack(b, ac - 1, NULL, 'b');
+	if (b->v == NULL)
+	{
+		free(a->v);
+		return (1);
+	}
+	return (0);
+}

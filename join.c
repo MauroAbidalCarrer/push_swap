@@ -6,26 +6,53 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 23:11:21 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 10:57:47 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:50:38 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-#include<stdio.h>
-
-int	max(int a, int b)
+int	f_sup(t_stack a, int val, int tmp)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	int	i;
+	int	index;
+
+	i = -1;
+	index = 0;
+	while (++i < a.s)
+	{
+		if (a.v[i] > val && tmp >= a.v[i])
+		{
+			tmp = a.v[i];
+			index = i;
+		}
+	}
+	return (index);
 }
 
-int	min(int a, int b)
+void	find_vals_to_sort(t_stack *a, t_stack *b, int max, int *indices)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	int	i;
+	int	smallest_ops;
+	int	tmp;
+	int	tmp_indices[2];
+
+	i = 0;
+	indices[0] = f_sup(*a, b->v[i], max);
+	indices[1] = 0;
+	smallest_ops = bring_up(a, b, indices, 0);
+	while (++i < b->s)
+	{
+		tmp_indices[0] = f_sup(*a, b->v[i], max);
+		tmp_indices[1] = i;
+		tmp = bring_up(a, b, tmp_indices, 0);
+		if (tmp < smallest_ops)
+		{
+			smallest_ops = tmp;
+			indices[0] = tmp_indices[0];
+			indices[1] = tmp_indices[1];
+		}
+	}
 }
 
 int	up_alone(t_stack *s, int index, int show)
@@ -36,12 +63,10 @@ int	up_alone(t_stack *s, int index, int show)
 	i = index;
 	if (show)
 	{
-//printf("bringing alone index %d in stack'%c'\n", index, s->name);
 		tmp = (index > s->s / 2);
 		tmp -= (index <= s->s / 2);
 		while (i)
 		{
-//printf("i = %d, tmp = %d\n", i, tmp);
 			i = (i + tmp) % s->s;
 
 			if (tmp == -1)
@@ -55,7 +80,7 @@ int	up_alone(t_stack *s, int index, int show)
 	return (s->s - index);
 }
 
-int	bring_along(t_stack **stacks, int *indices, void (*f)(t_stack *a, t_stack *b), int show)
+int	bring_along(t_stack **stacks, int *indices, t_rotation_all f, int show)
 {
 	int	clos;//closest
 	int	fur;//further
@@ -72,44 +97,27 @@ int	bring_along(t_stack **stacks, int *indices, void (*f)(t_stack *a, t_stack *b
 	if (f == &rotate_all)
 		ops = indexs[clos];
 	for (int i = 0; i < ops && show; i++)
-		(*f)(stacks[0], stacks[1]);
+		(*f)(stacks[0], stacks[1], 1);
 	if (f == &rotate_all)
 		indexs[fur] -= indexs[clos];
 	else
 		indexs[fur] = (indexs[fur] + ops) % stacks[fur]->s;
-/*
-	if (f == &rotate_all)
-		printf("along rotate, ");
-	else
-		printf("along rev, ");
-*/
-int	oui = up_alone(stacks[fur], indexs[fur], show);
-//printf("ops = %d, indexs[fur] = %d, upalone(fur) = %d\n", ops, indexs[fur], oui);
-	return (ops + oui);
+	return (ops + up_alone(stacks[fur], indexs[fur], show));
 }
 
 int	bring_up(t_stack *a, t_stack *b, int *indices, int show)
 {
 	t_stack *stacks[2];
-	int	res[3];//0 = both rotate, 1 = both rev_rotate, 2 = seperate way
+	int	res[3];
 	
 	stacks[0] = a;
 	stacks[1] = b;
-//printf("measurnig min nb ops for %d and %d\n", indices[0], indices[1]);
 	res[0] = bring_along(stacks, indices, &rotate_all, 0);
 	res[1] = bring_along(stacks, indices, &rev_all, 0);
 	res[2] = up_alone(a, indices[0], 0) + up_alone(b, indices[1], 0);
-//printf("along rotate = %d, along rev = %d, alone = %d\n", res[0], res[1], res[2]);
 	if (res[0] < res[1] && res[0] < res[2])
-	{
-//printf("choosing along rotate\n\n");
 		return (bring_along(stacks, indices, &rotate_all, show));
-	}
 	if (res[1] < res[0] && res[1] < res[2])
-{
-//printf("choosing along rev\n\n");
 		return (bring_along(stacks, indices, &rev_all, show));
-}
-//printf("choosing up alone\n\n");
 	return (up_alone(a, indices[0], show) + up_alone(b, indices[1], show));
 }

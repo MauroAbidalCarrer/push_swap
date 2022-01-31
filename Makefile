@@ -6,14 +6,17 @@
 #    By: maabidal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/29 20:08:50 by maabidal          #+#    #+#              #
-#    Updated: 2022/01/31 17:18:30 by maabidal         ###   ########.fr        #
+#    Updated: 2022/01/31 19:24:42 by maabidal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 BONUS_SRCS 	=	all_instructions.c\
 			instructions.c\
 			checker.c\
-			setup.c
+			utils.c\
+			setup.c\
+			get_next_line.c\
+			get_next_line_utils.c
 
 SRCS 	=	all_instructions.c\
 			instructions.c\
@@ -24,12 +27,16 @@ SRCS 	=	all_instructions.c\
 
 NAME	= push_swap
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g3
 RM		= rm -f
 OBJS	= $(SRCS:.c=.o)
-BNSOBJS	= $(BONUSSRCS:.c=.o)
+BNSOBJS	= $(BONUS_SRCS:.c=.o)
+BNS_NAME = checker
 
 all : $(NAME)
+
+bonus : $(BNSOBJS)
+	gcc -o $(BNS_NAME) $(BNSOBJS)
 
 $(NAME) : $(OBJS)
 	gcc -o $(NAME) $(OBJS)
@@ -42,6 +49,7 @@ clean :
 
 fclean : clean
 	$(RM) $(NAME)
+	$(RM) $(BNS_NAME)
 
 re :    fclean all
 
@@ -49,4 +57,4 @@ so:
 	$(CC) -fPIC $(CFLAGS) -c $(SRCS) $(BONUSSRCS)
 	gcc -shared -o libft.so $(OBJS) $(BNSOBJS)
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re bonus
