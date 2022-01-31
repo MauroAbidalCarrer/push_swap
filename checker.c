@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:06:42 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 22:56:39 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:12:14 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,57 +15,18 @@
 
 char	*get_next_line(int fd);
 
-t_stack	*get_op(char c, t_stack *a, t_stack *b)
+int	check_for_rotation(char *l, t_stack **ss)
 {
-	if (c == 'a')
-		return (b);
-	if (c == 'b')
-		return (a);
-	return (NULL);
-}
-
-t_stack	*get(char c, t_stack *a, t_stack *b)
-{
-	if (c == 'a')
-		return (a);
-	if (c == 'b')
-		return (b);
-	return (NULL);
-}
-
-int	exec(char *l, t_stack *a, t_stack *b)
-{
-	if (*l == 'p')
+	if ((l[1] == 'a' || l[1] == 'b') && l[2] == '\n'&& !l[3])
+		rotate(ss[l[1] == 'b'], 0);
+	else if(l[1] == 'r')
 	{
-		if ((l[1] == 'a' || l[1] == 'b') && l[2] == '\n' && !l[3])
-			push(get_op(l[1], a, b), get(l[1], a, b), 1);
-		else
-			return (1);
-	}
-	else if (*l == 'r')
-	{
-		if ((l[1] == 'a' || l[1] == 'b') && l[2] == '\n'&& !l[3])
-			rotate(get(l[1], a, b), 1);
-		else if(l[1] == 'r')
-		{
-			if ((l[2] == 'a' || l[2] == 'b') && l[3] == '\n' && !l[4])
-				rev_rotate(get(l[2], a, b), 1);
-			else if (l[2] == 'r' && l[3] == '\n' && !l[4])
-				rev_all(a, b, 1);
-			else if (l[2] == '\n' && !l[3])
-				rotate_all(a, b, 1);
-			else
-				return (1);
-		}
-		else
-			return (1);
-	}
-	else if (*l == 's')
-	{
-		if ((l[1] == 'a' || l[1] == 'b') && l[2] && !l[3])
-			swap(get(l[1], a, b), 1);
-		else if (l[1] == 's' && l[2] == '\n' && !l[3])
-			swap_all(a, b, 1);
+		if ((l[2] == 'a' || l[2] == 'b') && l[3] == '\n' && !l[4])
+			rev_rotate(ss[l[2] == 'b'], 0);
+		else if (l[2] == 'r' && l[3] == '\n' && !l[4])
+			rev_all(*ss, ss[1], 0);
+		else if (l[2] == '\n' && !l[3])
+			rotate_all(*ss, ss[1], 0);
 		else
 			return (1);
 	}
@@ -74,16 +35,44 @@ int	exec(char *l, t_stack *a, t_stack *b)
 	return (0);
 }
 
-int	listen(t_stack a, t_stack b)
+int	exec(char *l, t_stack **ss)
+{
+	if (*l == 'p')
+	{
+		if ((l[1] == 'a' || l[1] == 'b') && l[2] == '\n' && !l[3])
+			push(ss[l[1] == 'a'], ss[l[1] == 'b'], 0);
+		else
+			return (1);
+	}
+	else if (*l == 'r')
+		return (check_for_rotation(l, ss));
+	else if (*l == 's')
+	{
+		if ((l[1] == 'a' || l[1] == 'b') && l[2] && !l[3])
+			swap(ss[l[1] == 'b'], 0);
+		else if (l[1] == 's' && l[2] == '\n' && !l[3])
+			swap_all(*ss, ss[1], 0);
+		else
+			return (1);
+	}
+	else
+		return (1);
+	return (0);
+}
+
+int	listen(t_stack *a, t_stack *b)
 {
 	char	*line;
+	t_stack	*stacks[2];
 
+	*stacks = a;
+	stacks[1] = b;
 	while (1)
 	{
 		line = get_next_line(0);
 		if (line == NULL)
 			break ;
-		if (exec(line, &a, &b))
+		if (exec(line, stacks))
 		{
 			write(1, "ERROR\n", 6);
 			printf("line = \"%s\"\n", line);
@@ -92,13 +81,14 @@ int	listen(t_stack a, t_stack b)
 		}
 		free(line);
 	}
-	return (is_sorted(a) && b.s == 0);
+	return (is_sorted(*a) && b->s == 0);
 }
 
 int	main(int ac, char **av)
 {
 	t_stack a;
 	t_stack b;
+	int		res;
 
 	if (!av_is_valid(av + 1))
 	{
@@ -114,7 +104,7 @@ int	main(int ac, char **av)
 		free(a.v);
 		return (1);
 	}
-	int res = listen(a, b);
+	res = listen(&a, &b);
 	if (res)
 		write(1, "OK\n", 3);
 	else
