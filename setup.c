@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:18:50 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 18:52:04 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 22:46:18 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	init_stack(t_stack *s, int ac, char **av, char name)
 	if (s->v)
 	{
 		s->s = ac * (av != NULL);
+		s->init_size = ac;
 		while (av && ac-- > 0)
 			s->v[ac] = mini_atoi(av[ac]);
 	}

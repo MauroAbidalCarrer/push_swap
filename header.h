@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 17:35:27 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 20:27:14 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 22:45:45 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct stack
 	int	*v;
 	int	s;
 	char	name;
+	int	init_size;
 }	t_stack;
 typedef void (* t_rotation_all)(t_stack *a, t_stack *b, int show);
 

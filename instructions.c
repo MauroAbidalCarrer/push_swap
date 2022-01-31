@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:00:17 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 20:47:27 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 22:57:00 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	shift(t_stack s, int offset)
 	i = 0;
 	if (offset == -1)
 		i = s.s - 1;
-//	printf("shift(%c, %d), size - 1= %d\n", s.name, offset, s.s - 1);
 	tmp = s.v[i];
 	while (i + offset >= 0 && i + offset < s.s)
 	{
