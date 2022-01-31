@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:09:19 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/26 23:40:14 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 11:06:18 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "header.h"
@@ -70,7 +70,6 @@ int	is_sorted(t_stack s)
 				return (0);
 		}
 		return (1);
-		//return (s.s != 0);
 	}
 }
 
@@ -93,51 +92,91 @@ void	sam_eye_sort(t_stack *a, t_stack *b)
 		else
 			rotate(a, 1);
 	}
-//printf("is_sorted(a) = %d, before push all\n", is_sorted(*a));
-//print_stack(*a, 'a');
-//printf("is_sorted(b) = %d, before push all\n", is_sorted(*b));
 	push_all(b, a);
-	/*
-printf("done sotring\n");
-printf("name = %c\n", a->name);
-printf("is_sorted(a) = %d\n", is_sorted(*a));
-print_stack(*a);
-*/
 }
 
-void	radix_sort(t_stack *a, t_stack *b)
+int	f_sup(t_stack a, int val, int tmp)
 {
-	int	bitshift;
-	int	passes;
+	int	i;
+	int	index;
 
-	bitshift = 0;
-//print_stack(*a);
-//printf("starting sort\n");
-	while (!is_sorted(*a))
+	i = -1;
+	index = 0;
+	while (++i < a.s)
 	{
-		passes = a->s;
-//printf("bitshift = %d\n", bitshift);
-		while (passes-- > 0)
+		if (a.v[i] > val && tmp >= a.v[i])
 		{
-			if ((a->v[0] >> bitshift) & 1)
-				rotate(a, 1);
-			else
-				push(a, b);
-			if (is_sorted(*a) && is_sorted(*b))
-				break ;
-			//printf("second\n");
-		}
-		push_all(b, a);
-//		print_stack(*a);
-//		print_stack(*b);
-
-			//printf("first\n");
-		bitshift++;
-		if (bitshift >= 31)
-		{
-			//printf("ERROR\n");
-			break;
+			tmp = a.v[i];
+			index = i;
 		}
 	}
-	
+//printf("next smallest sup of %d, is a[%d](%d)\n", val, index, tmp);
+	return (index);
+}
+
+void	find_vals_to_sort(t_stack *a, t_stack *b, int max, int *indices)
+{
+	int	i;
+	int	smallest_ops;
+	int	tmp;
+	int	tmp_indices[2];
+
+	i = 0;
+	indices[0] = f_sup(*a, b->v[i], max);
+	indices[1] = 0;
+	smallest_ops = bring_up(a, b, indices, 0);
+//printf("nb moves bring up a[%d] and b[0] = %d\n", indices[0], smallest_ops);
+	while (++i < b->s)
+	{
+		tmp_indices[0] = f_sup(*a, b->v[i], max);
+		tmp_indices[1] = i;
+		tmp = bring_up(a, b, tmp_indices, 0);
+//printf("nb moves bring up a[%d] and b[%d] = %d\n", tmp_indices[0], tmp_indices[1], tmp);
+		if (tmp < smallest_ops)
+		{
+			smallest_ops = tmp;
+			indices[0] = tmp_indices[0];
+			indices[1] = tmp_indices[1];
+		}
+	}
+}
+
+void	hugo_sort(t_stack *a, t_stack *b)
+{
+	int	max;
+	int	indices[2];
+	//void	(*rotation)(t_stack *s, int show);
+
+
+	max = a->s - 1;
+	//vider a
+	while (a->s != 1)
+	{
+		if (a->v[0] != max)
+			push(a, b);
+		else
+			rotate(a, 1);
+	}
+	while (b->s)
+//for (int i = 0; i < 17; i++)
+//while (!is_sorted(*a) || b->s > 0)
+	{
+//print_stack(*a);
+//print_stack(*b);
+//printf("\n");
+		find_vals_to_sort(a, b, max, indices);
+//		printf("\n\nindices to join = %d and %d\n", indices[0], indices[1]);
+		bring_up(a, b, indices, 1);
+//printf("brought up\n");
+		push(b, a);
+	}
+	void	(*f)(t_stack *s, int show);
+	if (a->v[0] > a->s / 2)
+		f = &rotate;
+	else
+		f = &rev_rotate;
+	while (a->v[0])
+		(*f)(a, 1);
+//print_stack(*a);
+//print_stack(*b);
 }

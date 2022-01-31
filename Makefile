@@ -6,14 +6,15 @@
 #    By: maabidal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/29 20:08:50 by maabidal          #+#    #+#              #
-#    Updated: 2022/01/25 17:25:25 by maabidal         ###   ########.fr        #
+#    Updated: 2022/01/30 20:26:27 by maabidal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS 	=	all_instructions.c\
 			instructions.c\
 			main.c\
-			utils.c
+			utils.c\
+			join.c
 
 NAME	= push_swap
 CC		= gcc

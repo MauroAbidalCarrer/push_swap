@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 17:35:27 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/26 22:23:12 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:56:31 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 # ifndef LIMIT
-#  define LIMIT 7
+#  define LIMIT 24
 # endif
 # include<unistd.h>
 # include<stdlib.h>
@@ -37,7 +37,10 @@ void	sam_eye_sort(t_stack *a, t_stack *b);
 void	classify(t_stack *a, t_stack *b);
 void	sam_eye_sort(t_stack *a, t_stack *b);
 int	is_sorted(t_stack s);
-void	radix_sort(t_stack *a, t_stack *b);
+
+int	bring_up(t_stack *a, t_stack *b, int *indices, int show);
+void	hugo_sort(t_stack *a, t_stack *b);
+int	up_alone(t_stack *s, int index, int show);
 
 void	print_stack(t_stack s);
 #endif

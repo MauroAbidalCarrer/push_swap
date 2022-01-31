@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   instructions_all.c                                 :+:      :+:    :+:   */
+/*   all_instructions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:58:35 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/26 15:22:30 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 00:47:16 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	rev_all(t_stack *a, t_stack *b)
 {
 	rev_rotate(a, 0);
 	rev_rotate(b, 0);
-	write(1, "rrr\n", 3);
+	write(1, "rrr\n", 4);
 }
 
 void	push_all(t_stack *src, t_stack *dst)
