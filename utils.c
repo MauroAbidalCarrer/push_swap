@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:09:19 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 11:06:18 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:50:27 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "header.h"
@@ -110,8 +110,21 @@ int	f_sup(t_stack a, int val, int tmp)
 			index = i;
 		}
 	}
-//printf("next smallest sup of %d, is a[%d](%d)\n", val, index, tmp);
 	return (index);
+}
+
+int	should_swap(int tmp, int *tmp_indices, int smallest_ops, int *indices)
+{
+	int	diff;
+	int	tmp_diff;
+
+	if (tmp < smallest_ops)
+		return (1);
+	if (tmp > smallest_ops)
+		return (0);
+	diff = indices[0] - indices[1];
+	tmp_diff = tmp_indices[0] - tmp_indices[1];
+	return (tmp_diff < diff);
 }
 
 void	find_vals_to_sort(t_stack *a, t_stack *b, int max, int *indices)
@@ -125,14 +138,12 @@ void	find_vals_to_sort(t_stack *a, t_stack *b, int max, int *indices)
 	indices[0] = f_sup(*a, b->v[i], max);
 	indices[1] = 0;
 	smallest_ops = bring_up(a, b, indices, 0);
-//printf("nb moves bring up a[%d] and b[0] = %d\n", indices[0], smallest_ops);
 	while (++i < b->s)
 	{
 		tmp_indices[0] = f_sup(*a, b->v[i], max);
 		tmp_indices[1] = i;
 		tmp = bring_up(a, b, tmp_indices, 0);
-//printf("nb moves bring up a[%d] and b[%d] = %d\n", tmp_indices[0], tmp_indices[1], tmp);
-		if (tmp < smallest_ops)
+		if (should_swap(tmp, tmp_indices, smallest_ops, indices))
 		{
 			smallest_ops = tmp;
 			indices[0] = tmp_indices[0];
@@ -145,11 +156,25 @@ void	hugo_sort(t_stack *a, t_stack *b)
 {
 	int	max;
 	int	indices[2];
-	//void	(*rotation)(t_stack *s, int show);
-
+	void	(*f)(t_stack *s, int show);
+	int	medianne;
+	int	i;
 
 	max = a->s - 1;
+	medianne = max / 2;
 	//vider a
+	i = 0;
+	while (i < medianne)
+	{
+		if (a->v[0] < medianne)
+		{
+//printf("pushing %d, medianne = %d\n", a->v[0], medianne);
+			push(a, b);
+i++;
+}
+		else
+			rotate(a, 1);
+	}
 	while (a->s != 1)
 	{
 		if (a->v[0] != max)
@@ -158,25 +183,15 @@ void	hugo_sort(t_stack *a, t_stack *b)
 			rotate(a, 1);
 	}
 	while (b->s)
-//for (int i = 0; i < 17; i++)
-//while (!is_sorted(*a) || b->s > 0)
 	{
-//print_stack(*a);
-//print_stack(*b);
-//printf("\n");
 		find_vals_to_sort(a, b, max, indices);
-//		printf("\n\nindices to join = %d and %d\n", indices[0], indices[1]);
 		bring_up(a, b, indices, 1);
-//printf("brought up\n");
 		push(b, a);
 	}
-	void	(*f)(t_stack *s, int show);
 	if (a->v[0] > a->s / 2)
 		f = &rotate;
 	else
 		f = &rev_rotate;
 	while (a->v[0])
 		(*f)(a, 1);
-//print_stack(*a);
-//print_stack(*b);
 }
