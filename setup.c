@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:18:50 by maabidal          #+#    #+#             */
-/*   Updated: 2022/02/01 01:17:55 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/02/01 01:23:35 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	init(int ac, char **av, t_stack *a, t_stack *b)
 		return (1);
 	if (!av_is_valid(av + 1))
 	{
-		write(1, "Error\n", 6);
+		write(2, "Error\n", 6);
 		return (1);
 	}
 	init_stack(a, ac - 1, av + 1, 'a');
