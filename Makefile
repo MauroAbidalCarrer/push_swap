@@ -6,7 +6,7 @@
 #    By: maabidal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/29 20:08:50 by maabidal          #+#    #+#              #
-#    Updated: 2022/01/31 19:24:42 by maabidal         ###   ########.fr        #
+#    Updated: 2022/02/01 01:30:07 by maabidal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS 	=	all_instructions.c\
 
 NAME	= push_swap
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g3
+CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
 OBJS	= $(SRCS:.c=.o)
 BNSOBJS	= $(BONUS_SRCS:.c=.o)
