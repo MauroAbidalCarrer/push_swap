@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "push_swap.h"
 
 int	f_sup(t_stack a, int val, int tmp)
 {
@@ -68,7 +68,6 @@ int	up_alone(t_stack *s, int index, int show)
 		while (i)
 		{
 			i = (i + tmp) % s->s;
-
 			if (tmp == -1)
 				rotate(s, 1);
 			else
@@ -82,10 +81,11 @@ int	up_alone(t_stack *s, int index, int show)
 
 int	bring_along(t_stack **stacks, int *indices, t_rotation_all f, int show)
 {
-	int	clos;//closest
-	int	fur;//further
+	int	clos;
+	int	fur;
 	int	ops;
 	int	indexs[2];
+	int	i;
 
 	indexs[0] = indices[0];
 	indexs[1] = indices[1];
@@ -96,7 +96,8 @@ int	bring_along(t_stack **stacks, int *indices, t_rotation_all f, int show)
 	ops = stacks[clos]->s - indexs[clos];
 	if (f == &rotate_all)
 		ops = indexs[clos];
-	for (int i = 0; i < ops && show; i++)
+	i = -1;
+	while (++i < ops && show)
 		(*f)(stacks[0], stacks[1], 1);
 	if (f == &rotate_all)
 		indexs[fur] -= indexs[clos];
@@ -107,9 +108,9 @@ int	bring_along(t_stack **stacks, int *indices, t_rotation_all f, int show)
 
 int	bring_up(t_stack *a, t_stack *b, int *indices, int show)
 {
-	t_stack *stacks[2];
-	int	res[3];
-	
+	t_stack	*stacks[2];
+	int		res[3];
+
 	stacks[0] = a;
 	stacks[1] = b;
 	res[0] = bring_along(stacks, indices, &rotate_all, 0);

@@ -6,11 +6,11 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 19:19:58 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 18:52:51 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/02/01 00:43:24 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "push_swap.h"
 
 void	sam_eye_sort(t_stack *a, t_stack *b)
 {
@@ -34,17 +34,13 @@ void	sam_eye_sort(t_stack *a, t_stack *b)
 	push_all(b, a);
 }
 
-void	hugo_sort(t_stack *a, t_stack *b)
+void	empty_a(t_stack *a, t_stack *b, int max)
 {
-	int	max;
-	int	indices[2];
-	void	(*f)(t_stack *s, int show);
-	int	medianne;
-	int	i;
+	int		i;
+	int		medianne;
 
-	max = a->s - 1;
-	medianne = max / 2;
 	i = 0;
+	medianne = max / 2;
 	while (i < medianne)
 	{
 		if (a->v[0] < medianne)
@@ -62,6 +58,16 @@ void	hugo_sort(t_stack *a, t_stack *b)
 		else
 			rotate(a, 1);
 	}
+}
+
+void	hugo_sort(t_stack *a, t_stack *b)
+{
+	int		max;
+	int		indices[2];
+	void	(*f)(t_stack *s, int show);
+
+	max = a->s - 1;
+	empty_a(a, b, max);
 	while (b->s)
 	{
 		find_vals_to_sort(a, b, max, indices);
@@ -76,7 +82,7 @@ void	hugo_sort(t_stack *a, t_stack *b)
 		(*f)(a, 1);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_stack	a;
 	t_stack	b;

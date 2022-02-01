@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
-#include <stdio.h>
+#include "push_swap.h"
 
 void	shift(t_stack s, int offset)
 {
@@ -64,7 +63,7 @@ void	swap(t_stack *s, int show)
 	}
 }
 
-void	rotate(t_stack *s, int	show)
+void	rotate(t_stack *s, int show)
 {
 	shift(*s, 1);
 	if (show)

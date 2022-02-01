@@ -6,14 +6,11 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:58:35 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 17:23:49 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/02/01 00:41:18 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
-
-
-#include <stdio.h>
+#include "push_swap.h"
 
 void	swap_all(t_stack *a, t_stack *b, int show)
 {

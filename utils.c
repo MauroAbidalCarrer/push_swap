@@ -9,18 +9,7 @@
 /*   Updated: 2022/01/31 18:29:32 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "header.h"
-
-#include <stdio.h>
-
-
-void	print_stack(t_stack s)
-{
-	printf("stack '%c', size = %d\n", s.name, s.s);
-	for (int i = 0; i < s.s; i++)
-		printf("%c.v[%d] = %d\n", s.name, i, s.v[i]);
-	printf("\n");
-}
+#include "push_swap.h"
 
 void	classify(t_stack *a, t_stack *b)
 {
@@ -51,7 +40,7 @@ int	is_sorted(t_stack s)
 {
 	int	i;
 
-	if (s.name =='a')
+	if (s.name == 'a')
 	{
 		i = -1;
 		while (++i < s.s - 1)

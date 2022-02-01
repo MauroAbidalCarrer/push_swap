@@ -6,11 +6,12 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:18:50 by maabidal          #+#    #+#             */
-/*   Updated: 2022/01/31 22:46:18 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/02/01 01:17:55 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "push_swap.h"
+#include <limits.h>
 
 int	is_num(char *str)
 {
@@ -23,7 +24,7 @@ int	is_num(char *str)
 	return (1);
 }
 
-int	mini_atoi(char *str)
+int	mini_atoi(char *str, int *n)
 {
 	long	nb;
 	long	sign;
@@ -34,8 +35,13 @@ int	mini_atoi(char *str)
 		sign = -1;
 	str += (*str == '-');
 	while (*str)
+	{
 		nb = nb * 10 + *(str++) - '0';
-	return (nb * sign);
+		if (nb > INT_MAX)
+			return (1);
+	}
+	*n = nb * sign;
+	return (0);
 }
 
 int	av_is_valid(char **av)
@@ -43,17 +49,21 @@ int	av_is_valid(char **av)
 	int	i;
 	int	j;
 	int	nb;
+	int	tmp;
 
 	i = 0;
 	while (av[i])
 	{
 		if (!is_num(av[i]))
 			return (0);
-		nb = mini_atoi(av[i]);
+		if (mini_atoi(av[i], &nb))
+			return (0);
 		j = i;
 		while (av[++j])
 		{
-			if (mini_atoi(av[j]) == nb)
+			if (mini_atoi(av[j], &tmp))
+				return (0);
+			if (tmp == nb)
 				return (0);
 		}	
 		i++;
@@ -70,7 +80,7 @@ void	init_stack(t_stack *s, int ac, char **av, char name)
 		s->s = ac * (av != NULL);
 		s->init_size = ac;
 		while (av && ac-- > 0)
-			s->v[ac] = mini_atoi(av[ac]);
+			mini_atoi(av[ac], s->v + ac);
 	}
 }
 
@@ -80,12 +90,12 @@ int	init(int ac, char **av, t_stack *a, t_stack *b)
 		return (1);
 	if (!av_is_valid(av + 1))
 	{
-		write(1, "ERROR\n", 6);
+		write(1, "Error\n", 6);
 		return (1);
 	}
 	init_stack(a, ac - 1, av + 1, 'a');
 	if (a->v == NULL)
-		return(0);
+		return (0);
 	init_stack(b, ac - 1, NULL, 'b');
 	if (b->v == NULL)
 	{
