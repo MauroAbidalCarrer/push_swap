@@ -6,7 +6,7 @@
 /*   By: maabidal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:18:50 by maabidal          #+#    #+#             */
-/*   Updated: 2022/02/01 01:23:35 by maabidal         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:03:59 by maabidal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	mini_atoi(char *str, int *n)
 	while (*str)
 	{
 		nb = nb * 10 + *(str++) - '0';
-		if (nb > INT_MAX)
+		if (nb * sign > INT_MAX || nb * sign < INT_MIN)
 			return (1);
 	}
 	*n = nb * sign;

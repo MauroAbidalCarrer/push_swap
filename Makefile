@@ -6,19 +6,19 @@
 #    By: maabidal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/29 20:08:50 by maabidal          #+#    #+#              #
-#    Updated: 2022/02/01 01:30:07 by maabidal         ###   ########.fr        #
+#    Updated: 2022/02/04 17:32:56 by maabidal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 BONUS_SRCS 	=	all_instructions.c\
 			instructions.c\
-			checker.c\
+			checker_bonus.c\
 			utils.c\
 			setup.c\
-			get_next_line.c\
-			get_next_line_utils.c
+			get_next_line_bonus.c\
+			get_next_line_utils_bonus.c
 
-SRCS 	=	all_instructions.c\
+SRCS 		=	all_instructions.c\
 			instructions.c\
 			main.c\
 			utils.c\
@@ -52,9 +52,5 @@ fclean : clean
 	$(RM) $(BNS_NAME)
 
 re :    fclean all
-
-so:
-	$(CC) -fPIC $(CFLAGS) -c $(SRCS) $(BONUSSRCS)
-	gcc -shared -o libft.so $(OBJS) $(BNSOBJS)
 
 .PHONY : all clean fclean re bonus
